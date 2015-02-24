@@ -3,26 +3,25 @@
 #	Haiku hybrid builds need to be set to use gcc 4 manually
 #
 
+SubDir TOP ;
+
+SubDirHdrs [ FDirName $(TOP) src ] ;
+
 LOCATE_TARGET = [ FDirName $(TOP) objects ] ;
+
+MkDir $(LOCATE_TARGET)/src ;
+Depends crucon : $(LOCATE_TARGET)/src ;
 
 C++FLAGS += "-std=c++11 -O1" ;
 
-Main	scratch :
-	CoordCell.cpp
-	EarthCoordSystem.cpp
-	Date.cpp
-	main.cpp
-	MathUtils.cpp
-	ParseArgs.cpp
-	Rect.cpp
-	StationListFormat.cpp
-	StdTypedefs.cpp
-	Temperature.cpp
+Main	crucon :
+	[ GLOB $(TOP) src : *.cpp ]
 ;
 
-LINKLIBS on scratch = -lstdc++ ;
+LINKLIBS on crucon = -lstdc++ ;
 
 if ( $(OS) = HAIKU ) {
+	Echo $(LOCATE_TARGET)/src ;
 #	TODO: detect gcc version
 #		after Haiku bug is fixed...
 #	Shell "setarch x86" ;
