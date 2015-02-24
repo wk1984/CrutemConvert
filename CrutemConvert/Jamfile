@@ -1,0 +1,30 @@
+#
+#	Jamfile should work on Haiku and Linux without modification
+#	Haiku hybrid builds need to be set to use gcc 4 manually
+#
+
+LOCATE_TARGET = [ FDirName $(TOP) objects ] ;
+
+C++FLAGS += "-std=c++11 -O1" ;
+
+Main	scratch :
+	CoordCell.cpp
+	EarthCoordSystem.cpp
+	Date.cpp
+	main.cpp
+	MathUtils.cpp
+	ParseArgs.cpp
+	Rect.cpp
+	StationListFormat.cpp
+	StdTypedefs.cpp
+	Temperature.cpp
+;
+
+LINKLIBS on scratch = -lstdc++ ;
+
+if ( $(OS) = HAIKU ) {
+#	TODO: detect gcc version
+#		after Haiku bug is fixed...
+#	Shell "setarch x86" ;
+}
+
