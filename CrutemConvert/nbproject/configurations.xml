@@ -29,6 +29,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>data</Elem>
+    <Elem>src</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -39,6 +40,9 @@
         <rebuildPropChanged>true</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <commandLine>-std=c++11</commandLine>
+        </ccTool>
       </compileType>
       <item path="Jamfile" ex="false" tool="3" flavor2="0">
       </item>
@@ -47,6 +51,48 @@
       <item path="data/header.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/missing.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/CoordCell.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/CoordCell.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Date.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Date.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EarthCoordSystem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EarthCoordSystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/IDAvgAccum.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/MathUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/MathUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ParseArgs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ParseArgs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Point.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Rect.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Rect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/StationListFormat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/StationListFormat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/StdTypedefs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/StdTypedefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Temperature.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Temperature.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -76,6 +122,48 @@
       <item path="data/header.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="data/missing.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/CoordCell.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/CoordCell.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Date.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Date.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EarthCoordSystem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EarthCoordSystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/IDAvgAccum.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/MathUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/MathUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ParseArgs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ParseArgs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Point.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Rect.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Rect.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/StationListFormat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/StationListFormat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/StdTypedefs.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/StdTypedefs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Temperature.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Temperature.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
