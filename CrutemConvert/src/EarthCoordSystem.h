@@ -40,7 +40,7 @@ public:
 			float				Height		() const;
 
 
-			EMPoint*				ToPointArray() const;
+			EMPoint*			ToPointArray() const;
 
 			EMRect				ToRect		() const;
 

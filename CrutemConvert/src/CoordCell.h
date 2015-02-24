@@ -39,8 +39,8 @@
 
 class	EMCoordCell	{
 public:
-							EMCoordCell(const EMCoordRect&);
-	virtual					~EMCoordCell();
+								EMCoordCell(const EMCoordRect&);
+	virtual						~EMCoordCell();
 
 	const	EMCoordRect&		Coordinates	() const;
 			float				Area		() const;
