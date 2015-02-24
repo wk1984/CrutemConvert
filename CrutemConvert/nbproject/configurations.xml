@@ -12,6 +12,29 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="src" displayName="src" projectFiles="true">
+        <itemPath>src/CoordCell.cpp</itemPath>
+        <itemPath>src/CoordCell.h</itemPath>
+        <itemPath>src/Date.cpp</itemPath>
+        <itemPath>src/Date.h</itemPath>
+        <itemPath>src/EarthCoordSystem.cpp</itemPath>
+        <itemPath>src/EarthCoordSystem.h</itemPath>
+        <itemPath>src/IDAvgAccum.h</itemPath>
+        <itemPath>src/MathUtils.cpp</itemPath>
+        <itemPath>src/MathUtils.h</itemPath>
+        <itemPath>src/ParseArgs.cpp</itemPath>
+        <itemPath>src/ParseArgs.h</itemPath>
+        <itemPath>src/Point.h</itemPath>
+        <itemPath>src/Rect.cpp</itemPath>
+        <itemPath>src/Rect.h</itemPath>
+        <itemPath>src/StationListFormat.cpp</itemPath>
+        <itemPath>src/StationListFormat.h</itemPath>
+        <itemPath>src/StdTypedefs.cpp</itemPath>
+        <itemPath>src/StdTypedefs.h</itemPath>
+        <itemPath>src/Temperature.cpp</itemPath>
+        <itemPath>src/Temperature.h</itemPath>
+        <itemPath>src/main.cpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -44,14 +67,6 @@
           <commandLine>-std=c++11</commandLine>
         </ccTool>
       </compileType>
-      <item path="Jamfile" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/data.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/header.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/missing.txt" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/CoordCell.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/CoordCell.h" ex="false" tool="3" flavor2="0">
@@ -115,14 +130,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Jamfile" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/data.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/header.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="data/missing.txt" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/CoordCell.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/CoordCell.h" ex="false" tool="3" flavor2="0">
