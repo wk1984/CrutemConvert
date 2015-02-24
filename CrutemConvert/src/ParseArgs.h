@@ -10,8 +10,8 @@
 #define CC_PARSE_ARGS_H
 
 
-#define	CRUCON_VER_F	0.42
-#define	CRUCON_VER_S	"0.4b"
+#define	CRUCON_VER_F	0.5
+#define	CRUCON_VER_S	"0.5"
 
 #include "EarthCoordSystem.h"
 #include <string>
@@ -33,11 +33,12 @@ enum OutputTo {
 
 struct PAOutput {
 	string		headerFile,
-				dataFile,
-				outputFile,
-				ignoreFile;
+			dataFile,
+			outputFile,
+			ignoreFile;
 
-	bool		expectIgnored;
+	bool            autoValues;
+        bool		expectIgnored;
 
 	OutputTo	outputTarget;
 
@@ -56,15 +57,27 @@ struct PAOutput {
 	bool		singleCell;	// amoeba
 	EMCoordRect	cellRect;
 
-	//
+        int             returnValue;
 								PAOutput();
 };
 
 
 PAOutput*	ParseArgs	(int, char**);
 
-
-
+/*
+ *  Parameters
+ *      auto
+ *      header
+ *      data
+ *      ignore
+ *      output
+ *      gridsize
+ *      interpolate
+ *      infill
+ *      station
+ *      cellrect
+ *      help
+ */
 
 #endif // CC_PARSE_ARGS_H
 

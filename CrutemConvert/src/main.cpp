@@ -14,7 +14,8 @@
 		datasets prior to version 4.3.0.
 
 		This format included a header file with entries, such as :
-		"10010 709   87   10 Jan Mayen   NORWAY   19212011  541921    1  287"
+		"10010 709   87   10 Jan Mayen   NORWAY   19212011  541921    1  287
+"
 
 		And a data file which included all stations' monthly data preceded by
 		the appropriate header entry.
@@ -25,6 +26,7 @@
 */
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
@@ -223,10 +225,12 @@ int main(int argc, char**argv)
 {
 	using namespace std;
 	// parse input
-
 	PAOutput* pa = ParseArgs(argc, argv);
 	if (pa == nullptr)
-		return 1;
+		return 0;
+
+        if (pa->returnValue != 0)
+            return pa->returnValue;
 
 	/*
 		Parsing data files
@@ -238,10 +242,13 @@ int main(int argc, char**argv)
 		return 2;
 	}
 
-	if (pa->expectIgnored) {
+	if (pa->expectIgnored || pa->autoValues) {
 		error = ParseFile(pa->ignoreFile.c_str(), ignoreEntries);
-		if (error != "")
+		if (error != "") {
 			printf("ERROR: \"%s\"\n");
+			if (pa->expectIgnored)
+				return 1;
+		}
 	}
 
 	printf("\t%li stations in header (will ignore %li stations)\n", header.size(),
@@ -264,7 +271,8 @@ int main(int argc, char**argv)
 	Station* station = NULL;
 	int32 dataIndex = 0;
 
-		bool ignore = false;
+	bool ignore = false;
+	int8 showStat = 64;
 
 	for (int32 i = 0; i < header.size(); ++i) {
 		ignore = false;
@@ -296,9 +304,12 @@ int main(int argc, char**argv)
 			printf("\tHeader: \"%s\"\n", stationHeader.c_str());
 			printf("\tParser: \"%s\"\n", error.c_str());
 		} else if (!ignore) {
-			printf("\r%6li: %80s ", i, stationHeader.c_str());
-			fflush(stdout);
-
+			if (showStat > 64) {
+				printf("\r%6li: %80s ", i, stationHeader.c_str());
+				fflush(stdout);
+				showStat = 0;
+			}
+			++showStat;
 			LStringList sItems;
 			Split(stationHeader, ' ', sItems);
 
@@ -365,8 +376,14 @@ int main(int argc, char**argv)
 				year2000 = year2000 + yd.AVG;
 			}
 
-			printf("\r  Calculating: %5.2f%%  \t(%s)\t\t\t",	stationComplete, station->COUNTRY);
-			fflush(stdout);
+			if (showStat > 64){
+				printf("\r  Calculating: %5.2f%%  \t(%s)\t\t\t",
+					stationComplete, station->COUNTRY);
+				fflush(stdout);
+				showStat = 0;
+			}
+			showStat++;
+
 		} // end for each year
 		// Calculate 'quality' of station data completeness
 
@@ -394,17 +411,38 @@ int main(int argc, char**argv)
 		Save data to file!
 	*/
 
-	if (pa->outputTarget == OUTPUT_TO_CSV) {	// OUTPUT CSV
-		std::ofstream outputStr(pa->outputFile.c_str());
-		outputStr << "YEAR,AVERAGE,STATIONS\n";
-		globalAverage.sort();
-		globalAverage.for_each([&outputStr](uint32 year, double average, uint32 count) {
-			outputStr << year << "," << average << "," << count << "\n";
-		});
-		cout << "Wrote CSV data to \"" << pa->outputFile << "\"\n";
-		return 0;
-	} else {
-		cerr << "EMSL output not currently implemented!\n";
+	switch (pa->outputTarget ) {
+            case OUTPUT_TO_CSV: {
+				std::ofstream outputStr(pa->outputFile.c_str());
+				outputStr << "YEAR,AVERAGE,STATIONS\n";
+				globalAverage.sort();
+				globalAverage.for_each(
+					[&outputStr](uint32 year, double average, uint32 count) {
+					outputStr << year << "," << average << "," << count << "\n";
+				});
+				cout << "Wrote CSV data to \"" << pa->outputFile << "\"\n";
+				break;
+			}
+
+            case OUTPUT_TO_EMSL:
+                cerr << "EMSL output not currently implemented!\n";
+                break;
+
+            case OUTPUT_TO_CONSOLE:
+				cout << "YEAR\tAVG \tCOUNT\n";
+				globalAverage.sort();
+				globalAverage.for_each(
+					[](uint32 year, double average, uint32 count){
+					cout << year << "\t" << setprecision(2) << average << "\t" << count << "\n";
+				});
+                break;
+			
+			case OUTPUT_TO_PORT:
+				cerr << "Output to port currently unimplemented\n";
+                break;
+			
+			default:
+				cerr << "Confused by output target: " << pa->outputTarget;
 	}
 
 	return 0;

@@ -22,6 +22,14 @@ CND_ARTIFACT_PATH_Release=dist/Release/Cygwin_4.x-Windows/crutemconvert
 CND_PACKAGE_DIR_Release=dist/Release/Cygwin_4.x-Windows/package
 CND_PACKAGE_NAME_Release=crutemconvert.tar
 CND_PACKAGE_PATH_Release=dist/Release/Cygwin_4.x-Windows/package/crutemconvert.tar
+# Help_Test configuration
+CND_PLATFORM_Help_Test=Cygwin_4.x-Windows
+CND_ARTIFACT_DIR_Help_Test=dist/Help_Test/Cygwin_4.x-Windows
+CND_ARTIFACT_NAME_Help_Test=crutemconvert
+CND_ARTIFACT_PATH_Help_Test=dist/Help_Test/Cygwin_4.x-Windows/crutemconvert
+CND_PACKAGE_DIR_Help_Test=dist/Help_Test/Cygwin_4.x-Windows/package
+CND_PACKAGE_NAME_Help_Test=crutemconvert.tar
+CND_PACKAGE_PATH_Help_Test=dist/Help_Test/Cygwin_4.x-Windows/package/crutemconvert.tar
 #
 # include compiler specific variables
 #
