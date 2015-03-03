@@ -94,6 +94,8 @@ struct StationListHeader {
 };
 
 
+typedef struct	std::vector<Station*>	LStationList;
+
 
 
 #endif // L_STATION_LIST_FILE_FORMAT_H

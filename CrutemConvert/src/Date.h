@@ -11,6 +11,10 @@
 
 
 #include <cstdint>
+#include <future>
+
+using namespace std;
+
 #include "StdTypedefs.h"
 
 /*
@@ -112,9 +116,10 @@ public:
 				bool			IsLeapYear	(int64 = INT32_MAX) const;
 				int16			DaysInMonth	(int16 = 0) const;
 
-				int64			DaysFrom	(EMDate);
+				int64			DaysFrom	(EMDate) const;
 
-				void			PrintToStream() const;
+				void			PrintToStream(	const char* = "",
+												const char* = "\n") const;
 
 		EMDate&	operator << (const EMDate&);
 
@@ -132,6 +137,44 @@ private:
 								fDay,
 								fKeepDay;
 };
+
+
+// EMDateRange will automatically sort the dates by which came earliest.
+// First() will always be sooner than Last()
+class	EMDateRange {
+public:
+								EMDateRange	(int = 0);
+								EMDateRange	(const EMDate&, const EMDate&);
+								EMDateRange	(const EMDateRange&);
+
+	virtual						~EMDateRange();
+
+				int64			CountDays	() const;
+				int64			CountMonths	() const;
+				int64			CountYears	() const;
+
+				bool			IsValid		() const;
+
+				void			foreach_day	(function<void(const EMDate&)>) const;
+				void			foreach_month(function<void(const EMDate&)>) const;
+				void			foreach_year(function<void(const EMDate&)>) const;
+
+		const	EMDate&			First	() const;
+		const	EMDate&			Last	() const;
+
+				void			SetTo	(const EMDate&, const EMDate&);
+				void			Include	(const EMDate&);
+
+private:
+				void			_Reset() const;
+				EMDate			fFirst;
+				EMDate			fLast;
+
+	mutable		int64			fDayCount,
+								fMonthCount,
+								fYearCount;
+};
+
 
 constexpr EMDate _year(int64 year)
 {

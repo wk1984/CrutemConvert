@@ -131,7 +131,7 @@ EMDate	::	DaysInMonth	(int16 month) const
 
 
 int64
-EMDate	::	DaysFrom	(EMDate date)
+EMDate	::	DaysFrom	(EMDate date) const
 {	// due to our large date range with pre-big bang reference point
 	// we can't use the easy ways :-(
 	// This method isn't 100% accurate, sometimes being off by a day,
@@ -141,9 +141,9 @@ EMDate	::	DaysFrom	(EMDate date)
 
 	if (*this > date) {
 		first = &date;
-		second = this;
+		second = const_cast<EMDate*>(this);
 	} else if (*this < date) {
-		first = this;
+		first = const_cast<EMDate*>(this);
 		second = &date;
 	} else
 		return 0;
@@ -184,7 +184,7 @@ EMDate	::	DaysFrom	(EMDate date)
 
 
 void
-EMDate	::	PrintToStream() const
+EMDate	::	PrintToStream(const char* pfx, const char* sfx) const
 {
 	std::string monName;
 	switch (fMonth) {
@@ -203,11 +203,7 @@ EMDate	::	PrintToStream() const
 		default:monName = "---"; break;
 	}
 
-	printf("%s/%02i/%lli\n",
-		monName.c_str(),
-		fDay,
-		fYear
-	);
+	printf("%s%s/%02i/%lli%s", pfx, monName.c_str(), fDay, fYear, sfx);
 }
 
 
@@ -453,5 +449,177 @@ bool	operator < (const EMDate& d1, const EMDate& d2)
 	return d1 != d2 ;
 }
 
+
+
+//#pragma mark EMDateRange
+
+EMDateRange	::	EMDateRange	(int)
+	:
+	fDayCount	(-1),
+	fMonthCount	(-1),
+	fYearCount	(-1)
+	{}
+
+
+EMDateRange	::	EMDateRange	(const EMDate& d1, const EMDate& d2)
+	:
+	fDayCount	(-1),
+	fMonthCount	(-1),
+	fYearCount	(-1)
+{
+	SetTo(d1, d2);
+}
+
+
+EMDateRange	::	EMDateRange	(const EMDateRange& drange)
+	:
+	fDayCount	(-1),
+	fMonthCount	(-1),
+	fYearCount	(-1)
+{
+	fFirst = drange.fFirst;
+	fLast = drange.fLast;
+	fDayCount = drange.fDayCount;
+	fMonthCount = drange.fMonthCount;
+	fYearCount = drange.fYearCount;
+}
+
+
+EMDateRange	::	~EMDateRange()
+{
+}
+
+
+int64
+EMDateRange	::	CountDays	() const
+{
+	if (fDayCount >= 0 || IsValid() == false)
+		return fDayCount;
+
+	fDayCount = fFirst.DaysFrom(fLast);
+	return fDayCount;
+}
+
+
+int64
+EMDateRange	::	CountMonths	() const
+{
+	if (fMonthCount >= 0 || !IsValid())
+		return fMonthCount;
+
+	fMonthCount = 0;
+	foreach_month([this](const EMDate&) {
+			++fMonthCount;
+		});
+
+	return fMonthCount;
+}
+
+
+int64
+EMDateRange	::	CountYears	() const
+{
+	if (fYearCount >= 0 || !IsValid())
+		return fYearCount;
+
+	// This is the easiest method, and we may already
+	// have the day count cached, otherwise we do now ;-)
+	fYearCount =  ((double)CountDays())/ 365.25;
+
+	return fYearCount;
+}
+
+
+bool
+EMDateRange	::	IsValid() const
+{
+	return fFirst.IsValid() && fLast.IsValid();
+}
+
+
+void
+EMDateRange	::	foreach_day	(function<void(const EMDate&)> func) const
+{
+	EMDate date = fFirst;
+
+	while (date < fLast) {
+		func(date);
+		date += 1_day;
+	}
+}
+
+
+void
+EMDateRange	::	foreach_month(function<void(const EMDate&)> func) const
+{
+	EMDate date = fFirst;
+
+	while (date < fLast) {
+		func(date);
+		date += 1_month;
+	}
+}
+
+
+void
+EMDateRange	::	foreach_year(function<void(const EMDate&)> func) const
+{
+	EMDate date = fFirst;
+
+	while (date < fLast) {
+		func(date);
+		date += 1_year;
+	}
+}
+
+
+const EMDate&
+EMDateRange	::	First	() const
+{
+	return fFirst;
+}
+
+
+const EMDate&
+EMDateRange	::	Last	() const
+{
+	return fLast;
+}
+
+
+void
+EMDateRange	::	SetTo	(const EMDate& d1, const EMDate& d2)
+{
+	_Reset();
+	if (d2 > d1) {
+		fLast = d1;
+		fFirst = d2;
+	} else {
+		fFirst = d1;
+		fLast = d2;
+	}
+}
+
+
+void
+EMDateRange	::	Include	(const EMDate& date)
+{
+	if (date > fLast) {
+		fLast = date;
+		_Reset();
+	} else if (date < fFirst) {
+		fFirst = date;
+		_Reset();
+	}
+}
+
+
+void
+EMDateRange	::	_Reset() const
+{
+	fDayCount = -1;
+	fMonthCount = -1;
+	fYearCount = -1;
+}
 
 

@@ -12,7 +12,7 @@ LOCATE_TARGET = [ FDirName $(TOP) objects ] ;
 MkDir $(LOCATE_TARGET)/src ;
 Depends crucon : $(LOCATE_TARGET)/src ;
 
-C++FLAGS += "-std=c++11 -O1" ;
+C++FLAGS += "-std=c++11 -O3" ;
 
 Main	crucon :
 	[ GLOB $(TOP) src : *.cpp ]
@@ -25,5 +25,10 @@ if ( $(OS) = HAIKU ) {
 #	TODO: detect gcc version
 #		after Haiku bug is fixed...
 #	Shell "setarch x86" ;
+}
+
+if ( $(OS) = LINUX ) {
+	C++FLAGS += " -pthread" ;
+	LINKLIBS on scratch += -lpthread ;
 }
 
